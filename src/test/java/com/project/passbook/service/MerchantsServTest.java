@@ -27,7 +27,7 @@ public class MerchantsServTest {
      * {"data":{"id":8},"errorCode":0,"errorMsg":""}
      * */
     @Test
-//    @Transactional
+    //@Transactional
     public void testCreateMerchantServ() {
 
         CreateMerchantsRequest request = new CreateMerchantsRequest();

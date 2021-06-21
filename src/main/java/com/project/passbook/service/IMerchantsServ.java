@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
  * @Description 商户服务接口定义
  * @date 2021/6/14-20:42
  */
-@Service
 public interface IMerchantsServ {
     /**
      * <h2>创建商户服务</h2>
