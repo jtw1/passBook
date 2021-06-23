@@ -5,7 +5,7 @@ import com.project.passbook.ValueObject.CreateMerchantsResponse;
 import com.project.passbook.ValueObject.PassTemplate;
 import com.project.passbook.ValueObject.Response;
 import com.project.passbook.constant.ErrorCode;
-import com.project.passbook.dao.MerchantsDao;
+import com.project.passbook.dao.MerchantsDoMapper;
 import com.project.passbook.service.IMerchantsServ;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,22 +20,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class MerchantsServImpl implements IMerchantsServ {
     /** Merchants 数据库接口 */
+//    @Autowired
+//    private MerchantsDao merchantsDao;
     @Autowired
-    private MerchantsDao merchantsDao;
-
+    private MerchantsDoMapper merchantsDoMapper;
     @Override
     public Response createMerchants(CreateMerchantsRequest request) {
         Response response=new Response();
         CreateMerchantsResponse merchantsResponse = new CreateMerchantsResponse();
 
-        ErrorCode errorCode = request.validate(merchantsDao);
+        ErrorCode errorCode = request.validate(merchantsDoMapper);
         if (errorCode!=ErrorCode.SUCCESS){
             merchantsResponse.setId(-1);
 
             response.setErrorCode(errorCode.getErrCode());
             response.setErrorMsg(errorCode.getErrMessage());
         }else{
-            merchantsResponse.setId(merchantsDao.save(request.requestDaoToMerchants()).getId());
+            //先将记录保存到数据库，再设置merchantsResponse的id
+            merchantsDoMapper.insertSelective(request.requestDaoToMerchants());
+            merchantsResponse.setId(request.requestDaoToMerchants().getId());
         }
 
         response.setData(merchantsResponse);

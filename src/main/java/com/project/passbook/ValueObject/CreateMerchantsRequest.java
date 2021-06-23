@@ -1,7 +1,9 @@
 package com.project.passbook.ValueObject;
 
+import com.project.passbook.DataObject.MerchantsDo;
 import com.project.passbook.constant.ErrorCode;
 import com.project.passbook.dao.MerchantsDao;
+import com.project.passbook.dao.MerchantsDoMapper;
 import com.project.passbook.entity.Merchants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,11 +34,11 @@ public class CreateMerchantsRequest {
 
     /**
      * <h2>验证请求的有效性</h2>
-     * @param merchantsDao {@link MerchantsDao}
+     * @param merchantsDoMapper {@link MerchantsDoMapper}
      * @return {@link ErrorCode}
      * */
-    public ErrorCode validate(MerchantsDao merchantsDao){
-        if (merchantsDao.findByName(this.name)!=null){
+    public ErrorCode validate(MerchantsDoMapper merchantsDoMapper){
+        if (merchantsDoMapper.selectByName(this.name)!=null){
             return ErrorCode.DUPLICATE_NAME;
         }
 
@@ -62,15 +64,15 @@ public class CreateMerchantsRequest {
      * <h2>将请求对象转换为商户对象</h2>
      * @return {@link Merchants}
      * */
-    public Merchants requestDaoToMerchants(){
-        Merchants merchants=new Merchants();
+    public MerchantsDo requestDaoToMerchants(){
+        MerchantsDo merchantsDo=new MerchantsDo();
 
-        merchants.setName(name);
-        merchants.setLogoUrl(logoUrl);
-        merchants.setBusinessLicenseUrl(businessLicenseUrl);
-        merchants.setPhone(phone);
-        merchants.setAddress(address);
+        merchantsDo.setName(name);
+        merchantsDo.setLogoUrl(logoUrl);
+        merchantsDo.setBusinessLicenseUrl(businessLicenseUrl);
+        merchantsDo.setPhone(phone);
+        merchantsDo.setAddress(address);
 
-        return merchants;
+        return merchantsDo;
     }
 }

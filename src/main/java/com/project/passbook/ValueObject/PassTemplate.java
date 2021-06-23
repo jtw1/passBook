@@ -1,7 +1,7 @@
 package com.project.passbook.ValueObject;
 
 import com.project.passbook.constant.ErrorCode;
-import com.project.passbook.dao.MerchantsDao;
+import com.project.passbook.dao.MerchantsDoMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -45,11 +45,11 @@ public class PassTemplate {
 
     /**
      * <h2>校验优惠券对象的有效性</h2>
-     * @param merchantsDao {@link MerchantsDao}
+     * @param merchantsDoMapper {@link MerchantsDoMapper}
      * @return {@link ErrorCode}
      * */
-    public ErrorCode validate(MerchantsDao merchantsDao){
-        if (null == merchantsDao.findByID(id)){
+    public ErrorCode validate(MerchantsDoMapper merchantsDoMapper){
+        if (null == merchantsDoMapper.selectByPrimaryKey(id)){
             return ErrorCode.MERCHANTS_NOT_EXIST;
         }
         return ErrorCode.SUCCESS;

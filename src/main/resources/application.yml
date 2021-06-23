@@ -14,10 +14,8 @@ spring:
       group-id: passbook
     listener:
       concurrency: 4
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+  mybatis:
+    mapper-location: classpath:/resources/mapping/*.xml
 server:
   port: 9527
 logging:
